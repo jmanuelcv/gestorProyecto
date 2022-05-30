@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,6 +25,19 @@ return new class extends Migration
             $table->timestamp('fechaContrato');
         
         });
+
+        $todayDate = date("Y-m-d");
+
+        DB::table("personal")
+        ->insert([
+            "id"=>1,
+            "nombre" => "empleadoDefecto",
+            "emailPersonal" => "empleadoDefecto@gmail.com",
+            "direccion" => "Empleado Direccion",
+            "telefono" => "123456789",
+            "fechaContrato" =>$todayDate,
+        ]);
+
         
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -39,6 +52,16 @@ return new class extends Migration
             $table->integer('estado');
             
         });
+
+        DB::table("users")
+        ->insert([
+            "id"=>1,
+            "idPersonal" => 1,
+            "email" => "usuario1@gmail.com",
+            "password" => Hash::make("123456"),
+            "rol" => "Admin",
+            "estado" =>1,
+        ]);
 
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
